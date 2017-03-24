@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml lang=en>
+
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Omregning</title>
+    <meta name="author" content="ato">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../library/css/styles.css" type="text/css">
+    <link rel="stylesheet" href="omregning.css" type="text/css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>Omregning mellem enheder</h1>
+        <div id="instruction"></div>
+        <div id="explanation"></div>
+
+        <div class="col-xs-12">
+        <div class="select_container">
+        </div>
+        <div class="show_container">
+            <div class="q_kategori"></div>
+            <div class="question h3"></div>
+        </div>
+        <div class="inputcontainer h1">
+            <span class="first_val"></span><span>
+            <input class="inputfield"  size="10" type="text"></span><span class="second_val"></span>
+        </div>
+        <p class="postfix">meter</p>
+        <div class="btn btn-primary btn-tjek btn_onward">Tjek svar</div>
+    </div></div>
+    <script src="../library/vendor_scripts.js">
+    </script>
+    <script src="../library/custom_scripts.js">
+    </script>
+    <script type="text/javascript ">
+    $(document).ready(function() {
+        getAjaxData("GET", "json/omregning.json", false, "json");
+        one_line_footer();
+
+    });
+    </script>
+    <script src="omregning.js">
+    </script>
+</body>
+
+</html>

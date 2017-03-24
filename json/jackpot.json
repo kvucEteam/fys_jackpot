@@ -1,0 +1,13 @@
+[{
+    "storrelse": "Tid",
+    "prefix": ["Nano", "Mikro", "Milli"], 
+    "si": "sekunder"
+}, {
+    "storrelse": "Energi",
+    "prefix": ["Kilo", "Mega", "Giga"],
+    "si": "Joule"
+}, {
+    "storrelse": "Frekvens",
+    "prefix": ["Nano", "Mikro", "Milli", "Kilo", "Mega", "Giga"],
+    "si":"Hz"
+}]

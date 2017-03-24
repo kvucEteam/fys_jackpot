@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml lang=en>
+
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Jackpot test</title>
+    <meta name="author" content="ato">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../library/css/styles.css" type="text/css">
+    <link rel="stylesheet" href="jackpot.css" type="text/css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>Jackpot test</h1>
+        <div id="instruction"></div>
+        <div id="explanation"></div>
+        <div class="row"></div>
+        <div class="jp_container">
+
+        <h1><span class="storrelse label label-primary">E (energi)</span></h1>
+        </div>
+
+        <div class="scrollinfo"></div>
+    </div>
+    <script src="../library/vendor_scripts.js">
+    </script>
+    <script src="../library/custom_scripts.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript ">
+    $(document).ready(function() {
+        getAjaxData("GET", "json/jackpot.json", false, "json");
+        one_line_footer();
+
+    });
+    </script>
+    <script src="jackpot.js">
+    </script>
+</body>
+
+</html>
