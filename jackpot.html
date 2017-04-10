@@ -13,24 +13,25 @@
 
 <body>
     <div class="container-fluid">
-        <h1>Jackpot test</h1>
+        <h1>Træn notationerne</h1>
         <div id="instruction"></div>
         <div id="explanation"></div>
         <div class="row"></div>
-        <div class="jp_container"></div>
-
-        <div class="btn btn-primary btn-tjek">Tjek svar </div>
-
+        <div class="col-xs-12 select_container">Hej</div>
+        <div class="row"></div>
+        <div class="jp_container col-md-8 col-sm-12"></div>
+        <div class=" col-md-4 hidden-sm"></div>
+        <div class="row"></div>
+        <div class="btn btn-lg btn-primary btn-tjek">TJEK SVAR</div>
+        <div class="btn btn-lg btn-primary btn-next">NÆSTE</div>
+        <span class="scorecontainer"><span class="scoreText">Korrekte svar: 0</span></span>
         <div class="scrollinfo"></div>
-
         <div class="scoreinfo"></div>
     </div>
     <script src="../library/vendor_scripts.js">
     </script>
     <script src="../library/custom_scripts.js">
     </script>
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript ">
     $(document).ready(function() {
         getAjaxData("GET", "json/jackpot.json", false, "json");
@@ -38,7 +39,6 @@
 
     });
     </script>
-    <script src="bignumber.js"></script>
     <script src="jackpot.js">
     </script>
 </body>

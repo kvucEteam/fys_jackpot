@@ -3,14 +3,13 @@
     overflow: auto;
     width: 100%;
     margin-bottom: 10px;
-    border: 2px solid grey;
     position: relative;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&1+0,0+20,0+80,1+100 */
-    background: -moz-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 100%);
+    background: -moz-linear-gradient(top, rgba(102, 102, 102, 1) 0%, rgba(190, 204, 204, 1) 36.73%, rgba(246, 240, 230, 1) 62.34%, rgba(247, 229, 204, 1) 84.01%, rgba(102, 102, 102, 1) 100%);
     /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 100%);
+    background: -webkit-linear-gradient(top, rgba(102, 102, 102, 1) 0%, rgba(190, 204, 204, 1) 36.73%, rgba(246, 240, 230, 1) 62.34%, rgba(247, 229, 204, 1) 84.01%, rgba(102, 102, 102, 1) 100%);
     /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 100%);
+    background: linear-gradient(0deg, rgba(102, 102, 102, 1) 0%, rgba(190, 204, 204, 1) 36.73%, rgba(246, 240, 230, 1) 62.34%, rgba(247, 229, 204, 1) 84.01%, rgba(102, 102, 102, 1) 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0);
     /* IE6-9 */
@@ -18,22 +17,109 @@
 
 .number {
     height: 120px;
-    background-color: black;
-    border: 0px solid white;
     font-size: 30px;
     text-align: center;
-    line-height: 4;
+    line-height: 3.9;
+    text-shadow: 0px 1px #eee;
+    
 }
 
-.jp_container{
+.lock_container {
+    position: absolute;
+    right: 24px;
+    font-size: 38px;
+    color: #444;
+    top: 7px;
+    z-index: 1;
+    text-shadow: 00px 1px white;
+    margin-top: 18px;
+}
+
+@media screen and (min-device-width: 300) and (max-device-width: 440px) {
+    .number_container {
+        height: 400px;
+    }
+    .number {
+        height: 400px;
+        line-height: 4.2;
+        font-size: 40px
+    }
+    .lock_container {
+        margin-top: 62px;
+        font-size: 52px;
+    }
+}
+
+.jp_container {
     text-align: center;
+    margin-top: -15px;
 }
 
-.equals{
+.equals {
     color: black;
-    font-size: 60px;
-    margin-top: -30px;
+    font-size: 40px;
+    margin-top: -20px;
     margin-bottom: -50px;
 }
 
-.number_locked{color: white}
+.number_locked {
+    
+    color: black;
+    margin-top: 0px;
+}
+
+.betegnelse {
+    text-align: left;
+    margin-bottom: 10px;
+    z-index: 57;
+    /* background-color: black; */
+    /* color: white; */
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.overlay_container {
+    position: relative;
+}
+
+.scoreText {
+    font-size: 18px;
+    display: inline;
+}
+
+.dot {
+    color: #444;
+    font-size: 21px;
+    position: inherit;
+}
+
+.glyphicons-lock {
+    font-size: 34px;
+    top: 18px;
+}
+
+.select_container {
+    min-height: 30px;
+}
+
+input[type=checkbox] {
+    /* Double-sized Checkboxes */
+    padding: 20px;
+}
+
+
+/* Might want to wrap a span around your checkbox text */
+
+.checkbox_txt {
+    /* Checkbox text */
+    font-size: 100%;
+    margin-right: 16px;
+    padding-top: 0px;
+    margin-left: 5px;
+}
+
+.input_p{
+    cursor: pointer;
+}
+
