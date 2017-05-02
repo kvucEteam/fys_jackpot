@@ -27,7 +27,6 @@ var omregningsfaktor;
 
 var potens;
 
-var tjek_svar_count = 0;
 
 
 var level = 2;
@@ -63,8 +62,6 @@ $(document).ready(function() {
 
 
     init();
-
-    $('.scorecontainer').html(displayKorrekteSvarOgAntalForsoeg(0,0));  // Initialiser counter "KorrekteSvarOgAntalForsoeg" med værdierne 0 og 0.
 });
 
 
@@ -188,68 +185,42 @@ function init() {
         omregningsfaktor = 1000000000;
     }
 
-    // var omregnetNo = Math.m(omregningsfaktor, randomNo);
-    var omregnetNo = strMultiplication(omregningsfaktor, randomNo);  // <--- type = string
-
-
-    console.log('init - omregningsfaktor: ' + omregningsfaktor + ', randomNo: ' + randomNo + ', omregnetNo: ' + omregnetNo + ', typeof(omregnetNo): ' + typeof(omregnetNo) + ', beregn: ' + String(omregningsfaktor*randomNo));
+    var omregnetNo = Math.m(omregningsfaktor, randomNo);
 
     //console.log("OM: " + omregnetNo);
 
-    // omregnetNo = omregnetNo.noExponents();
+    omregnetNo = omregnetNo.noExponents();
 
-    // var omregnet_decimals = countDecimals(randomNo);
+    var omregnet_decimals = countDecimals(randomNo);
 
-    // if (omregnet_decimals > 13) {
-    //     //console.log("KØRER IGEN");
-    //     init();
-    //     return;
-    // }
+    if (omregnet_decimals > 13) {
+        //console.log("KØRER IGEN");
+        init();
+        return;
+    }
+
 
 
     //console.log("OM: " + omregnetNo);
 
     var omregnetNo_str = omregnetNo.toString().replace(".", ",");
 
-    omregnetNo_str = numberWithCommas(omregnetNo_str);  // <------  Formatere omregnetNo_str med mellemrum som tusinde-inddeler
+    omregnetNo_str = numberWithCommas(omregnetNo_str);
 
     korrekt_Array.push(omregnetNo_str + " " + si);
-    console.log("init - omregnetNo_str: " + omregnetNo_str);
 
     var randomNoString = omregnetNo.toString();
 
 
-    omregnetNo = parseFloat(omregnetNo);  // <--- Konverter til "number" fra "string", som omregnetNo oprindeligt var. 
 
     if (omregnetNo < 1) {
-        
-        // var scientific = Math.m(omregnetNo, Math.pow(10, randomNoString.length - 4));
-        // scientific = scientific.noExponents();
-        // var scientific_string = scientific + " &#9679 10<sup>-" + String(randomNoString.length - 1) + "</sup>"
-        // potens = "-" + String(randomNoString.length - 1);
-
-
-        var len = randomNo.toString().length;
-        console.log("init - len: " + len);
-
-        var dec = Math.pow(10, len-1);
-        console.log("init - dec: " + dec + ', omregningsfaktor: ' + omregningsfaktor);
-
-        var base = randomNo/dec;  // f.eks: 123 ---> 1.23
-        console.log("init - base: " + base);
-
-        potens = findExponent(omregningsfaktor, len-1);
-        console.log("init - potens: " + potens);
-
-
-        var scientific = base;
-
-        var scientific_string = scientific + " <span class='dot'>&#9679</span> 10<sup>" + potens + "</sup>";
-
-
+        var scientific = Math.m(omregnetNo, Math.pow(10, randomNoString.length - 4));
+        scientific = scientific.noExponents();
+        var scientific_string = scientific + " &#9679 10<sup>-" + String(randomNoString.length - 1) + "</sup>"
+        potens = "-" + String(randomNoString.length - 1);
     } else {
         var scientific = Math.d(omregnetNo, Math.pow(10, randomNoString.length - 1));
-        var scientific_string = scientific + " <span class='dot'>&#9679</span> 10<sup>" + String(randomNoString.length - 1) + "</sup>"
+        var scientific_string = scientific + " &#9679 10<sup>" + String(randomNoString.length - 1) + "</sup>"
         potens = String(randomNoString.length - 1);
     }
 
@@ -362,100 +333,8 @@ function init() {
 
 };
 
-// Funktion dedr udføre streng-mutiplikation mellem omregningsfaktor og randomNo:
-function strMultiplication(omregningsfaktor, randomNo) { 
-    console.log("\nstrMultiplication - omregningsfaktor: " + omregningsfaktor + ', randomNo: ' + randomNo);
-
-    var potens, produkt;
-
-    randomNo = randomNo.toString();
-
-    omregningsfaktor = omregningsfaktor.toString();
-
-    // Find potensen:
-    if (omregningsfaktor.indexOf('e')===-1) { // Tilfælde hvor omregningsfaktor > 1e-9
-        if (omregningsfaktor.indexOf('.')!==-1) {  // Tilfælde hvor omregningsfaktor < 1
-            potens = -(omregningsfaktor.indexOf('1') - 1);
-        } else {                                    // Tilfælde hvor omregningsfaktor > 1
-            potens = omregningsfaktor.length-1;
-        } 
-
-    } else {  //  Tilfælde hvor omregningsfaktor angives som f.eks 1e-9:
-        potens = parseInt(omregningsfaktor.substring(omregningsfaktor.indexOf('e')+1));
-    }
-    console.log("strMultiplication - potens: " + potens);
-
-    // Find produktet af multiplikationen mellem omregningsfaktor og randomNo:
-    if (potens > 0) {
-        produkt = randomNo+'0'.repeat(potens);
-    } else {
-        console.log("strMultiplication - randomNo.length: " + randomNo.length + ', potens: ' + potens + ', randomNo.length + potens: ' + String(randomNo.length + potens));
-        produkt = '0.' + '0'.repeat(Math.abs(randomNo.length + potens)) + randomNo;
-    }
-    console.log("strMultiplication - produkt: " + produkt + ', parseFloat(produkt): ' + parseFloat(produkt)  );
-
-    // return parseFloat(produkt);
-    return produkt;
-}
-strMultiplication(0.001, 123);
-strMultiplication(0.00001, 123);
-strMultiplication(1000, 123);
-strMultiplication(1e5, 123);
-strMultiplication(1e-5, 123);
-strMultiplication(1e-9, 123);
-strMultiplication(1e-12, 123);
-
-
-
-// Funktion der justere 10-tals-potensen af "omregningsfaktor" < 1, ved at tager "omregningsfaktor" og justere denne ift "ofm" ("order of magnitude", hvor 10 = 1 ofm, 100 = 2 ofm, 1000 = 3 ofm osv osv).
-// Se følende eksempler: 
-//      findExponent(0.0001, 2) = -2
-//      findExponent(1e-9, 2) = -7
-function findExponent(omregningsfaktor, ofm) {
-    console.log('\nfindExponent - omregningsfaktor 1: ' + omregningsfaktor + ', typeof(omregningsfaktor): ' + typeof(omregningsfaktor) + ', ofm: ' + ofm + ', typeof(ofm): ' + typeof(ofm));
-
-    omregningsfaktor = omregningsfaktor.toString();
-
-    if (omregningsfaktor.indexOf('e')===-1) { // Tilfælde hvor omregningsfaktor != 1e-n, hvor n = 1, 2, 3, ... 
-
-        omregningsfaktor = omregningsfaktor.split('.')[1].split('');  // Split "0.000117" op til "000117" og derefter [0,0,1,1,7]
-        console.log('\findExponent - randomNoString 2: ' + omregningsfaktor);
-
-        var strNum = '';
-        for (var n in omregningsfaktor) {
-            console.log('findExponent - n: ' + n);
-
-            if (omregningsfaktor[n] == '0') {
-                strNum += omregningsfaktor[n];
-            } else {
-                console.log('findExponent - strNum: ' + strNum);
-                console.log('findExponent - typeof(strNum.length): ' + typeof(strNum.length));
-                console.log('findExponent - return: ' + String(strNum.length + 1 - ofm));
-
-                return '-' + String(strNum.length + 1 - ofm);
-            }
-        }
-    } else {   // Tilfælde hvor omregningsfaktor = 1e-n, hvor n = 1, 2, 3, ... 
-        return ofm - parseInt(omregningsfaktor.substring(omregningsfaktor.indexOf('e-')+2));
-    }
-}
-console.log('findExponent(0.0001, 2): ' + findExponent(0.0001, 2));
-console.log('findExponent(0.001, 2): ' + findExponent(0.001, 2));
-console.log('findExponent(1e-9, 2): ' + findExponent(1e-9, 2));
-
-
-function displayKorrekteSvarOgAntalForsoeg(attempts, correctAnswers) {
-    var HTML = '';
-    HTML += '<span class="attemptsAndcorrectAnswers">';
-    HTML +=     '<span class="glyphicon glyphicon-pencil"></span> <span class="attemptsAndcorrectAnswers_subDisplay h4">ANTAL FORSØG = <span class="attempts">' + attempts +'</span></span>';
-    HTML +=     '<span class="glyphicon glyphicon-ok"></span> <span class="attemptsAndcorrectAnswers_subDisplay h4">KORREKTE SVAR = <span class="correctAnswers">' + correctAnswers +'</span></span>';
-    HTML += '</span>';
-    return HTML;
-}
-
 
 function tjek_svar() {
-    ++tjek_svar_count;
 
     var scroll_objekt_indeks = $(".number_container").index(active_scroll_object);
     //active_scroll_object.hide();
@@ -476,13 +355,6 @@ function tjek_svar() {
 
             //console.log("indeks_number: " + indeks_number);
             var html_svar = $(this).find(".number").eq(indeks_number).html();
-
-
-
-console.log('tjek_svar - html_svar: ' + html_svar);
-
-
-
             svar_Array.push(html_svar);
         } else {
             svar_Array.push(korrekt_Array[index]);
@@ -561,8 +433,7 @@ console.log('tjek_svar - html_svar: ' + html_svar);
 
 
 
-        // $(".scoreText").html("Korrekte svar: <b>" + overall_score + "</b>");
-        $(".correctAnswers").html( overall_score );
+        $(".scoreText").html("Korrekte svar: <b>" + overall_score + "</b>");
         $(".btn-next").click(init);
 
 
@@ -570,7 +441,6 @@ console.log('tjek_svar - html_svar: ' + html_svar);
 
     }
 
-    $(".attempts").html(tjek_svar_count);
 
     //console.log("Scrore: " + score);
 }

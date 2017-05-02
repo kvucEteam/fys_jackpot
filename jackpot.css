@@ -115,11 +115,84 @@ input[type=checkbox] {
     /* Checkbox text */
     font-size: 100%;
     margin-right: 16px;
-    padding-top: 0px;
-    margin-left: 5px;
+    padding-top: 1px;
+    margin-left: 3px;
 }
 
 .input_p{
     cursor: pointer;
 }
 
+
+/****************************************************************
+                        Tilføjet af THAN
+****************************************************************/
+
+
+.overlay_container {
+    border: 1px solid #999;
+}
+
+.number_container {
+    margin-bottom: 0px;
+}
+
+
+.select_container {
+    margin-bottom: 25px;
+}
+
+.dot {
+    font-size: 15px;
+    position: relative;
+    top: -4%;
+    margin-left: 2px;
+    margin-right: 1px;
+}
+
+.number_locked .dot {
+    margin-left: -1px;
+    margin-right: -5px;
+}
+
+
+.attemptsAndcorrectAnswers{
+    border: 1px solid #000;
+    padding: 7px 10px 5px 10px;
+    border-radius: 5px;
+    position: relative;
+    top: -6px;
+}
+
+.attemptsAndcorrectAnswers .glyphicon{
+    margin-right: 5px;
+    font-size: 1.5em;
+    top: 4px;
+}
+
+.attemptsAndcorrectAnswers_subDisplay:nth-child(2){
+    margin-right: 20px;
+}
+
+
+.betegnelse {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.equals {
+    /*margin-top: -26px;*/
+    margin-top: -16px;
+    margin-bottom: -45px;
+}
+
+/***** TEST SÅ VALSER OG KONSOL KAN SES SAMTIDIG *****/
+/*
+.number_container {
+    height: 80px;
+}
+
+.number {
+    height: 80px;
+}
+*/
