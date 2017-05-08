@@ -186,6 +186,24 @@ input[type=checkbox] {
     margin-bottom: -45px;
 }
 
+.spacer {
+    margin-top: 13px;
+}
+
+.marginTopAjust{
+    margin-top: -20px;
+}
+
+.widthFixed {
+    min-width: 215px;
+    display: inline-block;
+    padding-right: 0px;
+}
+
+.dataDisplay {
+    margin-right: 10px;
+}
+
 /***** TEST SÅ VALSER OG KONSOL KAN SES SAMTIDIG *****/
 /*
 .number_container {

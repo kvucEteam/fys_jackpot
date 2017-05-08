@@ -446,10 +446,18 @@ console.log('findExponent(1e-9, 2): ' + findExponent(1e-9, 2));
 
 function displayKorrekteSvarOgAntalForsoeg(attempts, correctAnswers) {
     var HTML = '';
-    HTML += '<span class="attemptsAndcorrectAnswers">';
+    HTML += '<span class="attemptsAndcorrectAnswers hidden-xs hidden-sm">';
     HTML +=     '<span class="glyphicon glyphicon-pencil"></span> <span class="attemptsAndcorrectAnswers_subDisplay h4">ANTAL FORSØG = <span class="attempts">' + attempts +'</span></span>';
     HTML +=     '<span class="glyphicon glyphicon-ok"></span> <span class="attemptsAndcorrectAnswers_subDisplay h4">KORREKTE SVAR = <span class="correctAnswers">' + correctAnswers +'</span></span>';
     HTML += '</span>';
+    HTML += '<div class="hidden-md hidden-lg marginTopAjust"></div>';
+    HTML += '<div class="attemptsAndcorrectAnswers hidden-md hidden-lg widthFixed">';
+    HTML +=     '<span class="glyphicon glyphicon-pencil"></span> <span class="h4">ANTAL FORSØG = <span class="attempts dataDisplay">' + attempts +'</span></span>';
+    HTML += '</div>';
+    HTML += '<div class="hidden-md hidden-lg spacer"></div>';
+    HTML += '<div class="attemptsAndcorrectAnswers hidden-md hidden-lg widthFixed">';
+    HTML +=     '<span class="glyphicon glyphicon-ok"></span> <span class="h4">KORREKTE SVAR = <span class="correctAnswers dataDisplay">' + correctAnswers +'</span></span>';
+    HTML += '</div>';
     return HTML;
 }
 
