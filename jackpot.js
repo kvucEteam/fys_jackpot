@@ -43,11 +43,9 @@ $(document).ready(function() {
     build_select_container();
 
     $('input[name="level"]:radio').change(function() {
-        $(".microhint").remove();
+        
         level = $(this).val();
-        $(".microhint").click(function(){
-            init();
-        });
+       
         if (level == 0) {
             microhint($(this), "Du får nu opgaver kun med milli og kilo som præfikser");
         } else if (level == 1) {
@@ -347,6 +345,8 @@ function init() {
         var indeks = $(".number_container").index($(this));
         console.log("focusin on " + indeks);
         active_scroll_object = $(".number_container").eq(indeks);
+        
+
         $(".microhint").remove();
     });
 
@@ -585,7 +585,7 @@ console.log('tjek_svar - html_svar: ' + html_svar);
 
 function feedback(num) {
 
-    $(".microhint").remove();
+    //$(".microhint").remove();
     console.log("feedback til: " + num + " fb_counter: " + fb_counter);
     if (num == 3) {
         microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Potensen udtrykker hvor mange pladser kommaet er flyttet til højre eller venstre.");
@@ -606,7 +606,7 @@ function update_locks(index) {
 
     //$(this).find(".lock_container").hide();
     if ($(".overlay_container").eq(index).find(".lock_container").find(".glyphicon").hasClass("glyphicon-resize-vertical")) {
-        microhint($(".number_container").eq(index), "Korrekt", "green");
+        microhint($(".number_container").eq(index), "<h4>Du har svaret <span class='label label-success'>KORREKT</span> </h4>");
         $(".lock_container").eq(index).fadeOut(1500, function() {
 
             $(".number_container").eq(index).html("<div class='number number_locked'>" + korrekt_Array[index] + "</div>");
