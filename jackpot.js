@@ -34,11 +34,15 @@ var level = 2;
 
 var fb_counter = 0;
 
+guess = '0';      // Definere den globale variable "guess", som bruges i feedback()
+answer = '0';  // Definere den globale variable "answer", som bruges i feedback()
+
 $(document).ready(function() {
 
 
 
-    $("#instruction").html(instruction("Få tallene til at passe sammen med det låste felt ved at scrolle i de tre andre felter. Du kan få brug for en lommeregner."));
+    // $("#instruction").html(instruction("Få tallene til at passe sammen med det låste felt ved at scrolle i de tre andre felter. Du kan få brug for en lommeregner."));
+    $("#instruction").html(instruction("Få tallene til at passe sammen med det låste felt ved at scrolle i de tre andre felter."));
     $('#explanation').html(explanation("En størrelse kan udtrykkes på flere forskellige måder. Her skal du træne hvilke andre notationer, der udtrykker den samme værdi."));
 
 
@@ -67,6 +71,10 @@ $(document).ready(function() {
     $('.scorecontainer').html(displayKorrekteSvarOgAntalForsoeg(0, 0)); // Initialiser counter "KorrekteSvarOgAntalForsoeg" med værdierne 0 og 0.
 
 
+    // setTimeout(function(){ 
+    //     feedback(2); // Test af SLKs feedback d. 15/5
+    // }, 500);
+    
 });
 
 
@@ -416,6 +424,10 @@ strMultiplication(1e-9, 123);
 strMultiplication(1e-12, 123);
 
 
+console.log('numberWithCommas(strMultiplication(1e-9, 1)): ' + numberWithCommas(strMultiplication(1e-9, 1)));
+console.log('numberWithCommas(strMultiplication(1e9, 1)): ' + numberWithCommas(strMultiplication(1e9, 1)));
+
+
 
 // Funktion der justere 10-tals-potensen af "omregningsfaktor" < 1, ved at tager "omregningsfaktor" og justere denne ift "ofm" ("order of magnitude", hvor 10 = 1 ofm, 100 = 2 ofm, 1000 = 3 ofm osv osv).
 // Se følende eksempler: 
@@ -452,6 +464,127 @@ function findExponent(omregningsfaktor, ofm) {
 console.log('findExponent(0.0001, 2): ' + findExponent(0.0001, 2));
 console.log('findExponent(0.001, 2): ' + findExponent(0.001, 2));
 console.log('findExponent(1e-9, 2): ' + findExponent(1e-9, 2));
+
+console.log('findExponent(0.0000621, 0): ' + findExponent(0.0000621, 0));
+
+
+function convertStrNumWithUnitToFloat(strNumWithUnit) {
+    
+    console.log('\nconvertStrNumWithUnitToFloat - strNumWithUnit 0: ' + JSON.stringify(strNumWithUnit));
+
+    var strNumWithUnit_mod = strNumWithUnit.split(' ');
+    console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 1: ' + JSON.stringify(strNumWithUnit_mod));
+    if (strNumWithUnit_mod.length > 1) {
+        strNumWithUnit_mod.pop();   // Fjern enheden hvis den er tilføjet...
+    }
+    var strNumWithNoUnit = strNumWithUnit_mod;
+    console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 2: ' + JSON.stringify(strNumWithUnit_mod));
+    strNumWithUnit_mod = strNumWithUnit_mod.join().replace(/,/g, '');
+    console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 3: ' + JSON.stringify(strNumWithUnit_mod));
+    var pos = strNumWithUnit_mod.indexOf('00', 0);
+    if (pos == 0) { // Hvis strNumWithUnit_mod < 0, f.eks hvis strNumWithUnit_mod = 00000234, så ...
+        strNumWithUnit_mod = '0.'+strNumWithUnit_mod.substring(1);
+    } else {  // Hvis 1 < strNumWithUnit_mod, så ...
+        pos = strNumWithNoUnit.indexOf(',');
+        if (pos !== -1) {  // Hvis et "," findes i strNumWithUnit (f.eks strNumWithUnit == 1,23 eller 12,3), så ....
+            strNumWithUnit_mod = strNumWithNoUnit.substring(0,pos)+'.'+strNumWithNoUnit.substring(pos+1);
+        }
+    }
+    console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 4: ' + JSON.stringify(strNumWithUnit_mod));
+    
+    // strNumWithUnit_mod = parseFloat(strNumWithUnit_mod);    // VIGTIGT: Dette er udkommenteret da parseFloat(0.0000001) ---> 1e-7, hvilket returnExponent() ikke p.t. håntere. 
+    // console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 5: ' + strNumWithUnit_mod);
+    
+    return strNumWithUnit_mod;
+}
+convertStrNumWithUnitToFloat('0,000 000 006 21 Kelvin');
+convertStrNumWithUnitToFloat('0,000 0621 Kelvin');
+convertStrNumWithUnitToFloat('0,621 Kelvin');
+convertStrNumWithUnitToFloat('6,21 Kelvin');
+convertStrNumWithUnitToFloat('62,1 Kelvin');
+convertStrNumWithUnitToFloat('621 Kelvin');
+convertStrNumWithUnitToFloat('621 000 000 Kelvin');
+
+
+function calcFactorToGetRightAnswer(guess, answer) { 
+
+    console.log('\ncalcFactorToGetRightAnswer - guess: ' + guess + ', answer: ' + answer);
+
+    var num_guess = convertStrNumWithUnitToFloat(guess);
+    var num_answer = convertStrNumWithUnitToFloat(answer);
+
+    var exponent = returnExponent(num_answer) - returnExponent(num_guess); // Differance i eksponenten beregnes
+
+    console.log('calcFactorToGetRightAnswer - num_guess: ' + num_guess + ', num_answer: ' + num_answer + ', exponent: ' + exponent);
+
+
+    var eFactor = '10<sup>'+exponent+'</sup>';
+    var strFactor;
+    if (exponent < 0) {
+        strFactor = '0,'+'0'.repeat(Math.abs(exponent)-1)+'1';
+    } else {
+        strFactor = '1'+'0'.repeat(exponent);
+    }
+    console.log('calcFactorToGetRightAnswer - exponent: ' + exponent + ', strFactor: ' + strFactor + ', eFactor: ' + eFactor);
+
+    strFactor = numberWithCommas(strFactor);  // 
+
+    // Vælg return af heltal eller exponentiel notation:
+    // -------------------------------------------------
+    return strFactor; // Return heltal: f.eks "10 000" eller "1 000 000"
+    // return eFactor;  // Return exponentiel notation: f.eks "10^4" eller "10^6"
+
+}
+calcFactorToGetRightAnswer('621 Kelvin', '0,621 Kelvin');
+calcFactorToGetRightAnswer('621 000 Kelvin', '0,000 621 Kelvin');
+calcFactorToGetRightAnswer('0,621 Kelvin', '621 Kelvin');
+calcFactorToGetRightAnswer('91,9 meter', '0,919 meter');
+
+
+function returnExponent(num) {  // <----  VIGTIGT: num må ikke være i eksponentiel notation, f.eks 1e-7 eller 1e-9.
+    console.log('\nreturnExponent - num: ' + num);
+    var strNum = num.toString();
+    var pos = strNum.indexOf('0');
+    console.log('returnExponent - strNum: ' + strNum + ', pos: ' + pos);
+    numArr = strNum.split('');
+    var exponent = 0;
+    if (pos == 0) {  // F.eks: 0.001 eller 
+        console.log('returnExponent - A0');
+        for (var n in numArr) {
+            if ((numArr[n] != '0') && (numArr[n] != '.')) {
+                break;
+            } else {
+                console.log('returnExponent - A1');
+                ++exponent;
+            }
+        }
+        exponent = -(exponent - 1); // Kompenserer for "0." i f.eks "0.0001"
+    } else {  // F.eks 1.23 eller 10 000
+        console.log('returnExponent - A2');
+        pos = strNum.indexOf('.');
+        if (pos !== -1) {  // F.eks 1.23 eller 23.5
+            console.log('returnExponent - A3');
+            if (pos > 1) { // F.eks 23.5
+                console.log('returnExponent - A4');
+                exponent = exponent - 1;
+            } else {  // F.eks 1.23
+                console.log('returnExponent - A5');
+                exponent = 0;  // pos = 1
+            }
+        } else {  // F.eks 123 eller 123 000
+            console.log('returnExponent - A5');
+            exponent = strNum.length - 1;
+        }
+    }
+    console.log('returnExponent - exponent: ' + exponent);
+    return exponent;
+}
+returnExponent(0.00123);
+returnExponent(0.123);
+returnExponent(1.23);
+returnExponent(12.3);
+returnExponent(123);
+returnExponent(1230);
 
 
 function displayKorrekteSvarOgAntalForsoeg(attempts, correctAnswers) {
@@ -538,7 +671,11 @@ function tjek_svar() {
         score++;
     } else {
         if (scroll_objekt_indeks == 2) {
+            guess = svar_Array[2];     
+            answer = korrekt_Array[2];
             feedback(2);
+            console.log('tjek_svar - svar_Array[2]: ' + svar_Array[2] + ', korrekt_Array[2]: ' + korrekt_Array[2] + ', korrekt_Array[2]/svar_Array[2]: ' + String(korrekt_Array[2]/svar_Array[2]) );   // Tjek af SLKs svar d. 15/5
+            convertStrNumWithUnitToFloat(svar_Array[2], korrekt_Array[2]);
         }
     }
 
@@ -600,8 +737,8 @@ function feedback(num) {
     if (num == 3) {
         microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Potensen udtrykker hvor mange pladser kommaet er flyttet til højre eller venstre.");
     } else if (num == 2) {
-        microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Du skal gange si-enheden med " + omregningsfaktor);
-
+        // microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Du skal gange si-enheden med " + omregningsfaktor);
+        microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Du skal gange si-enheden med " + calcFactorToGetRightAnswer(guess, answer));
     } else if (num == 1) {
         microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Det dekadiske præfiks angiver en potens af grundtallet ti, stillet foran enheden. Tip: " + prefix + " står for " + prefix_lang + " og er enheden ganget med " + omregningsfaktor);
     } else if (num == 0) {

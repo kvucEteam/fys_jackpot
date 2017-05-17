@@ -1,7 +1,7 @@
 [{
-    "storrelse": "Bølgelængde",
+    "storrelse": "Længde",
     "prefix": ["n", "µ", "m", "k"],
-    "prefix_lang": ["Nano", "Mikro", "Milli", "Kilo"],
+    "prefix_lang": ["Nano", "Mikro", "Milli", "Kilo"], 
     "si": "meter",
     "fork": "m"
 }, {
