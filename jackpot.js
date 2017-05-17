@@ -483,7 +483,7 @@ function convertStrNumWithUnitToFloat(strNumWithUnit) {
     strNumWithUnit_mod = strNumWithUnit_mod.join('');
     var strNumWithNoUnit = strNumWithUnit_mod;
     console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 3: ' + JSON.stringify(strNumWithUnit_mod));
-    strNumWithUnit_mod = strNumWithUnit_mod.replace(',', '.');  // Hvis et "," findes i strNumWithUnit (f.eks strNumWithUnit == 1,23 eller 12,3), så erstat det med ".", idet "12,3" IKKE vil blive kionverteret korrekt af parseFloat().
+    strNumWithUnit_mod = strNumWithUnit_mod.replace(',', '.');  // Hvis et "," findes i strNumWithUnit (f.eks strNumWithUnit == 1,23 eller 12,3), så erstat det med ".", idet "12,3" IKKE vil blive konverteret korrekt af parseFloat().
     console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 4: ' + JSON.stringify(strNumWithUnit_mod));
     
     // strNumWithUnit_mod = parseFloat(strNumWithUnit_mod);    // VIGTIGT: Dette er udkommenteret da parseFloat(0.0000001) ---> 1e-7, hvilket returnExponent() ikke p.t. håntere. 
