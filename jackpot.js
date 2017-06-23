@@ -34,8 +34,8 @@ var level = 2;
 
 var fb_counter = 0;
 
-guess = '0';      // Definere den globale variable "guess", som bruges i feedback()
-answer = '0';  // Definere den globale variable "answer", som bruges i feedback()
+guess = '0'; // Definere den globale variable "guess", som bruges i feedback()
+answer = '0'; // Definere den globale variable "answer", som bruges i feedback()
 
 $(document).ready(function() {
 
@@ -48,18 +48,7 @@ $(document).ready(function() {
 
     build_select_container();
 
-    $('input[name="level"]:radio').change(function() {
 
-        level = $(this).val();
-
-        if (level == 0) {
-            microhint($(this), "Du får nu opgaver kun med milli og kilo som præfikser");
-        } else if (level == 1) {
-            microhint($(this), "Du får nu opgaver med mikro, milli og kilo og Mega som præfikser");
-        } else if (level == 2) {
-            microhint($(this), "Du får nu alle opgaver med nano, mikro, milli og kilo, Mega og Giga som præfikser");
-        }
-    });
 
     //setInterval(function() { log_scroll(); }, 33);
 
@@ -74,7 +63,22 @@ $(document).ready(function() {
     // setTimeout(function(){ 
     //     feedback(2); // Test af SLKs feedback d. 15/5
     // }, 500);
-    
+    $('input[name="level"]:radio').change(function() {
+
+        level = $(this).val();
+
+
+
+        if (level == 0) {
+            microhint($(this), "Du får nu opgaver kun med milli og kilo som præfikser");
+        } else if (level == 1) {
+            microhint($(this), "Du får nu opgaver med mikro, milli og kilo og Mega som præfikser");
+        } else if (level == 2) {
+            microhint($(this), "Du får nu alle opgaver med nano, mikro, milli og kilo, Mega og Giga som præfikser");
+        }
+
+        init();
+    });
 });
 
 
@@ -127,18 +131,18 @@ function init() {
             randomprefix = Math.floor(Math.random() * jsonData[randomenhed].prefix.length);
             prefix = jsonData[randomenhed].prefix[randomprefix];
             prefix_lang = jsonData[randomenhed].prefix_lang[randomprefix];
-            console.log("RPF: " + prefix);
+            //console.log("RPF: " + prefix);
         }
     } else if (level == 1) {
 
 
         while (prefix === "G" || prefix === "n") {
             counter++;
-            console.log("counter: " + counter);
+            //console.log("counter: " + counter);
             randomprefix = Math.floor(Math.random() * jsonData[randomenhed].prefix.length);
             prefix = jsonData[randomenhed].prefix[randomprefix];
             prefix_lang = jsonData[randomenhed].prefix_lang[randomprefix];
-            console.log("RPF: " + prefix);
+            //console.log("RPF: " + prefix);
         }
 
     }
@@ -224,7 +228,7 @@ function init() {
     omregnetNo_str = numberWithCommas(omregnetNo_str); // <------  Formatere omregnetNo_str med mellemrum som tusinde-inddeler
 
     korrekt_Array.push(omregnetNo_str + " " + si);
-    console.log("init - omregnetNo_str: " + omregnetNo_str);
+    //console.log("init - omregnetNo_str: " + omregnetNo_str);
 
     var randomNoString = omregnetNo.toString();
 
@@ -240,16 +244,16 @@ function init() {
 
 
         var len = randomNo.toString().length;
-        console.log("init - len: " + len);
+        //console.log("init - len: " + len);
 
         var dec = Math.pow(10, len - 1);
-        console.log("init - dec: " + dec + ', omregningsfaktor: ' + omregningsfaktor);
+        //console.log("init - dec: " + dec + ', omregningsfaktor: ' + omregningsfaktor);
 
         var base = randomNo / dec; // f.eks: 123 ---> 1.23
-        console.log("init - base: " + base);
+        //console.log("init - base: " + base);
 
         potens = findExponent(omregningsfaktor, len - 1);
-        console.log("init - potens: " + potens);
+        //console.log("init - potens: " + potens);
 
 
         var scientific = base;
@@ -291,7 +295,7 @@ function init() {
 
 
     for (var i = 0; i < 4; i++) {
-        $(".jp_container").append("<h4 class='betegnelse'>" + betegnelser[i] + ":</h4><div class='overlay_container'><div class='lock_container'><span class='glyphicon glyphicon-resize-vertical'></span></div><div class='number_container'></div></div><div class='equals'>=</div>");
+        $(".jp_container").append("<h4 class='betegnelse'>" + betegnelser[i] + ":</h4><div class='overlay_container'><div class='lock_container'><span class='glyphicon glyphicon-resize-vertical'></span></div><div class='number_container'></div></div><div class='equals hidden-xs'>=</div>");
 
 
 
@@ -357,14 +361,18 @@ function init() {
     $(".number_container").scroll(function() {
 
         var indeks = $(".number_container").index($(this));
-        console.log("focusin on " + indeks);
+        //console.log("focusin on " + indeks);
         active_scroll_object = $(".number_container").eq(indeks);
 
 
-        $(".microhint").remove();
+        //$(".microhint").remove();
     });
 
-    $(".number_container").scrollStopped(function() {
+    $(".number_container").scrollStopped(function(index) {
+
+        var indeks = $(this).index();
+
+        console.log("SCROLL STROPPED NUM CONT:  " + indeks);
 
         //var indeks = ev.index();
         //console.log("indeks: " + JSON.stringify(ev));
@@ -376,7 +384,7 @@ function init() {
 
     fork = jsonData[randomenhed].fork;
 
-    
+
 
 };
 
@@ -469,26 +477,26 @@ console.log('findExponent(0.0000621, 0): ' + findExponent(0.0000621, 0));
 
 
 function convertStrNumWithUnitToFloat(strNumWithUnit) {
-    
+
     console.log('\nconvertStrNumWithUnitToFloat - strNumWithUnit 0: ' + JSON.stringify(strNumWithUnit));
 
     var strNumWithUnit_mod = strNumWithUnit.split(' ');
     console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 1: ' + JSON.stringify(strNumWithUnit_mod));
     if (strNumWithUnit_mod.length > 1) {
         console.log('convertStrNumWithUnitToFloat - A0');
-        strNumWithUnit_mod.pop();   // Fjern enheden hvis den er tilføjet...
+        strNumWithUnit_mod.pop(); // Fjern enheden hvis den er tilføjet...
     }
     console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 2: ' + JSON.stringify(strNumWithUnit_mod));
     // strNumWithUnit_mod = strNumWithUnit_mod.join().replace(/,/g, '');
     strNumWithUnit_mod = strNumWithUnit_mod.join('');
     var strNumWithNoUnit = strNumWithUnit_mod;
     console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 3: ' + JSON.stringify(strNumWithUnit_mod));
-    strNumWithUnit_mod = strNumWithUnit_mod.replace(',', '.');  // Hvis et "," findes i strNumWithUnit (f.eks strNumWithUnit == 1,23 eller 12,3), så erstat det med ".", idet "12,3" IKKE vil blive konverteret korrekt af parseFloat().
+    strNumWithUnit_mod = strNumWithUnit_mod.replace(',', '.'); // Hvis et "," findes i strNumWithUnit (f.eks strNumWithUnit == 1,23 eller 12,3), så erstat det med ".", idet "12,3" IKKE vil blive konverteret korrekt af parseFloat().
     console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 4: ' + JSON.stringify(strNumWithUnit_mod));
-    
+
     // strNumWithUnit_mod = parseFloat(strNumWithUnit_mod);    // VIGTIGT: Dette er udkommenteret da parseFloat(0.0000001) ---> 1e-7, hvilket returnExponent() ikke p.t. håntere. 
     // console.log('convertStrNumWithUnitToFloat - strNumWithUnit_mod 5: ' + strNumWithUnit_mod);
-    
+
     return strNumWithUnit_mod;
 }
 convertStrNumWithUnitToFloat('0,000 000 006 21 Kelvin');
@@ -501,7 +509,7 @@ convertStrNumWithUnitToFloat('621 000 000 Kelvin');
 convertStrNumWithUnitToFloat('0,698 Watt');
 
 
-function calcFactorToGetRightAnswer(guess, answer) { 
+function calcFactorToGetRightAnswer(guess, answer) {
 
     console.log('\ncalcFactorToGetRightAnswer - guess: ' + guess + ', answer: ' + answer);
 
@@ -513,16 +521,16 @@ function calcFactorToGetRightAnswer(guess, answer) {
     console.log('calcFactorToGetRightAnswer - num_guess: ' + num_guess + ', num_answer: ' + num_answer + ', exponent: ' + exponent);
 
 
-    var eFactor = '10<sup>'+exponent+'</sup>';
+    var eFactor = '10<sup>' + exponent + '</sup>';
     var strFactor;
     if (exponent < 0) {
-        strFactor = '0,'+'0'.repeat(Math.abs(exponent)-1)+'1';
+        strFactor = '0,' + '0'.repeat(Math.abs(exponent) - 1) + '1';
     } else {
-        strFactor = '1'+'0'.repeat(exponent);
+        strFactor = '1' + '0'.repeat(exponent);
     }
     console.log('calcFactorToGetRightAnswer - exponent: ' + exponent + ', strFactor: ' + strFactor + ', eFactor: ' + eFactor);
 
-    strFactor = numberWithCommas(strFactor);  // 
+    strFactor = numberWithCommas(strFactor); // 
 
     // Vælg return af heltal eller exponentiel notation:
     // -------------------------------------------------
@@ -536,17 +544,17 @@ calcFactorToGetRightAnswer('0,621 Kelvin', '621 Kelvin');
 calcFactorToGetRightAnswer('91,9 meter', '0,919 meter');
 calcFactorToGetRightAnswer('0,069 8 Watt', '0,698 Watt');
 
-function returnExponent(num) {  // <----  VIGTIGT: num må ikke være i eksponentiel notation, f.eks 1e-7 eller 1e-9.
+function returnExponent(num) { // <----  VIGTIGT: num må ikke være i eksponentiel notation, f.eks 1e-7 eller 1e-9.
     console.log('\nreturnExponent - num: ' + num);
     var strNum = num.toString();
     var pos = strNum.indexOf('0');
     console.log('returnExponent - strNum: ' + strNum + ', pos: ' + pos);
     numArr = strNum.split('');
     var exponent = 0;
-    if (pos == 0) {  // F.eks: 0.001 eller 
+    if (pos == 0) { // F.eks: 0.001 eller 
         console.log('returnExponent - A0');
         for (var n in numArr) {
-            if ((numArr[n] != '0') && (numArr[n] != '.')) {
+            if ((numArr[n] != '0') &&  (numArr[n] != '.')) {
                 break;
             } else {
                 console.log('returnExponent - A1');
@@ -554,19 +562,19 @@ function returnExponent(num) {  // <----  VIGTIGT: num må ikke være i eksponen
             }
         }
         exponent = -(exponent - 1); // Kompenserer for "0." i f.eks "0.0001"
-    } else {  // F.eks 1.23 eller 10 000
+    } else { // F.eks 1.23 eller 10 000
         console.log('returnExponent - A2');
         pos = strNum.indexOf('.');
-        if (pos !== -1) {  // F.eks 1.23 eller 23.5
+        if (pos !== -1) { // F.eks 1.23 eller 23.5
             console.log('returnExponent - A3');
             if (pos > 1) { // F.eks 23.5
                 console.log('returnExponent - A4');
                 exponent = exponent - 1;
-            } else {  // F.eks 1.23
+            } else { // F.eks 1.23
                 console.log('returnExponent - A5');
-                exponent = 0;  // pos = 1
+                exponent = 0; // pos = 1
             }
-        } else {  // F.eks 123 eller 123 000
+        } else { // F.eks 123 eller 123 000
             console.log('returnExponent - A5');
             exponent = strNum.length - 1;
         }
@@ -666,10 +674,10 @@ function tjek_svar() {
         score++;
     } else {
         if (scroll_objekt_indeks == 2) {
-            guess = svar_Array[2];     
+            guess = svar_Array[2];
             answer = korrekt_Array[2];
             feedback(2);
-            console.log('tjek_svar - svar_Array[2]: ' + svar_Array[2] + ', korrekt_Array[2]: ' + korrekt_Array[2] + ', korrekt_Array[2]/svar_Array[2]: ' + String(korrekt_Array[2]/svar_Array[2]) );   // Tjek af SLKs svar d. 15/5
+            console.log('tjek_svar - svar_Array[2]: ' + svar_Array[2] + ', korrekt_Array[2]: ' + korrekt_Array[2] + ', korrekt_Array[2]/svar_Array[2]: ' + String(korrekt_Array[2] / svar_Array[2])); // Tjek af SLKs svar d. 15/5
             convertStrNumWithUnitToFloat(svar_Array[2], korrekt_Array[2]);
         }
     }
@@ -983,8 +991,11 @@ function numberWithCommas(x) {
 
 
 $.fn.scrollStopped = function(callback) {
+    
     var that = this,
         $this = $(that);
+
+        console.log("SCROLL STOPPED: " + that + ", " + $this);
     $this.scroll(function(ev) {
         clearTimeout($this.data('scrollTimeout'));
         $this.data('scrollTimeout', setTimeout(callback.bind(that), 250, ev));

@@ -33,6 +33,7 @@
     z-index: 1;
     text-shadow: 00px 1px white;
     margin-top: 18px;
+    opacity: .7;
 }
 
 @media screen and (min-device-width: 300) and (max-device-width: 440px) {
@@ -204,6 +205,12 @@ input[type=checkbox] {
 .dataDisplay {
     margin-right: 10px;
 }
+
+.glyphicon-resize-vertical{
+    margin-top: 16px;
+    opacity: .7;
+}
+
 
 /***** TEST SÅ VALSER OG KONSOL KAN SES SAMTIDIG *****/ 
 /*
