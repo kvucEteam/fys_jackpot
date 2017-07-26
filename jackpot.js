@@ -79,6 +79,9 @@ $(document).ready(function() {
 
         init();
     });
+
+
+    microhint($(".number").eq(0), "Scroll på felterne og få dem til at passe med det låste felt.<br>Tryk på TJEK SVAR når du mener de passer sammen.");
 });
 
 
