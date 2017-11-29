@@ -34,6 +34,11 @@ var level = 2;
 
 var fb_counter = 0;
 
+String.prototype.repeat = function(n){
+    n= n || 1;
+    return Array(n+1).join(this);
+}
+
 guess = '0'; // Definere den globale variable "guess", som bruges i feedback()
 answer = '0'; // Definere den globale variable "answer", som bruges i feedback()
 
