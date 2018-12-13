@@ -4,7 +4,7 @@ var scrolling = false;
 
 var betegnelser = ["Størrelse", "Dekadisk præfiks", "SI-enhed", "Eksponentiel notation"];
 var prefixes_Array = ["n", "µ", "m", "k", "M", "G"];
-var omregnings_Array = [.000000001, .00000001, .0000001, .000001, .00001, .0001, .001, .01, .1, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 10000000, 100000000, 1000000000];
+var omregnings_Array = [.000000001, .00000001, .0000001, .000001, .00001, .0001, .001, .01, .1, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000];
 
 var korrekt_Array = [];
 
@@ -749,7 +749,7 @@ function feedback(num) {
         microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Potensen udtrykker hvor mange pladser kommaet er flyttet til højre eller venstre.");
     } else if (num == 2) {
         // microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Du skal gange si-enheden med " + omregningsfaktor);
-        microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Du skal gange si-enheden med " + calcFactorToGetRightAnswer(guess, answer));
+        microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Du skal gange dit svar med <br><b>" + calcFactorToGetRightAnswer(guess, answer));
     } else if (num == 1) {
         microhint($(".number_container").eq(num), "<div class='microhint_label_danger'>Du har ikke " + betegnelser[num] + " korrekt</div>Det dekadiske præfiks angiver en potens af grundtallet ti, stillet foran enheden. Tip: " + prefix + " står for " + prefix_lang + " og er enheden ganget med " + omregningsfaktor);
     } else if (num == 0) {
