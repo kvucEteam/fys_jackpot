@@ -30,7 +30,7 @@ var potens;
 var tjek_svar_count = 0;
 
 
-var level = 2;
+var level = 1;
 
 var fb_counter = 0;
 
@@ -876,15 +876,17 @@ function build_select_container() {
     HTML += "<div class='cb_container'>";
     for (var i = 0; i < level_Array.length; i++) {
 
-        HTML += " <label class='input_p'><input class='checkboxes_str' checked type='radio' name='level' value=" + i + "><span class='checkbox_txt'>" + level_Array[i] + "</span></label>";
+        HTML += " <label class='input_p'><input class='checkboxes_str' type='radio' name='level' value=" + i + "><span class='checkbox_txt'>" + level_Array[i] + "</span></label>";
 
     }
+
+     //("checked", true);
 
     HTML += "</div>";
 
     $(".select_container").html(HTML);
 
-
+$(".checkboxes_str").eq(1).attr("checked", "checked")
 
 }
 
